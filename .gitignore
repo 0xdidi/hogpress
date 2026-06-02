@@ -18,6 +18,10 @@
 # wp-env / local
 /.wp-env.override.json
 
+# Playwright MCP artifacts and local verification screenshots
+/.playwright-mcp/
+/phase*.png
+
 # OS / editor
 .DS_Store
 Thumbs.db

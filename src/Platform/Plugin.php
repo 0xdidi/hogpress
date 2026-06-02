@@ -7,6 +7,10 @@
 
 namespace Hogpress\Platform;
 
+use Hogpress\Platform\Admin\Notices;
+use Hogpress\Platform\Admin\SettingsPage;
+use Hogpress\Platform\Frontend\Enqueue;
+
 /**
  * Wires the plugin together on init.
  *
@@ -66,6 +70,13 @@ final class Plugin {
 		$this->booted = true;
 
 		add_action( 'init', array( $this, 'load_textdomain' ) );
+
+		// Admin UI.
+		( new SettingsPage() )->register();
+		( new Notices() )->register();
+
+		// Front-end posthog-js injection.
+		( new Enqueue() )->register();
 
 		// Subsequent phases register their components here.
 	}

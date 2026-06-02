@@ -1,0 +1,278 @@
+/**
+ * Connect for PostHog admin styles.
+ *
+ * Follows docs/05_DESIGN.md: PostHog product UI, not marketing. Warm near-cream
+ * and olive-ink neutrals, one yellow-orange action per screen, separate honest
+ * status colors, rounded geometric headings + system body, hairline borders,
+ * small radii, almost no shadows, no gradients.
+ *
+ * Tokens are defined once as custom properties and never hardcoded inline.
+ */
+
+.hogpress-wrap {
+	/* Color tokens. */
+	--hp-ink: #23251d;
+	--hp-ink-soft: #4d4f46;
+	--hp-canvas: #ffffff;
+	--hp-canvas-soft: #fbfaf6;
+	--hp-border: #e6e3d8;
+	--hp-border-strong: #c9c5b5;
+	--hp-accent: #f7a501;
+	--hp-accent-ink: #23251d;
+	--hp-brand-red: #f54e00; /* brand moments only, never status */
+	--hp-success: #2f8a4e;
+	--hp-success-soft: #eaf5ee;
+	--hp-warning: #b8860b;
+	--hp-error: #c0392b;
+	--hp-error-soft: #fbecea;
+
+	/* Type tokens. Heading face is a swappable rounded geometric stack; a
+	   bundled Quicksand/Nunito file is planned for cross-platform parity. */
+	--hp-font-title: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", Quicksand, Nunito, "Segoe UI", system-ui, sans-serif;
+	--hp-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+	/* Shape tokens. */
+	--hp-radius: 8px;
+	--hp-radius-sm: 6px;
+
+	max-width: 760px;
+	color: var(--hp-ink-soft);
+}
+
+/* Top bar: title + status pill. */
+.hogpress-topbar {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin: 10px 0 18px;
+}
+
+.hogpress-title {
+	font-family: var(--hp-font-title);
+	font-weight: 600;
+	color: var(--hp-ink);
+	margin: 0;
+	font-size: 23px;
+	letter-spacing: 0.1px;
+}
+
+.hogpress-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding: 4px 11px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	border: 1px solid var(--hp-border-strong);
+	background: var(--hp-canvas);
+	color: var(--hp-ink-soft);
+}
+
+.hogpress-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: currentColor;
+	opacity: 0.6;
+}
+
+.hogpress-pill--ok {
+	color: var(--hp-success);
+	border-color: var(--hp-success);
+	background: var(--hp-success-soft);
+}
+
+.hogpress-pill--ok .hogpress-dot {
+	opacity: 1;
+}
+
+/* Flash messages (save/validation results). */
+.hogpress-flash {
+	border: 1px solid var(--hp-border-strong);
+	border-left-width: 4px;
+	border-radius: var(--hp-radius-sm);
+	padding: 12px 14px;
+	margin: 0 0 18px;
+	background: var(--hp-canvas);
+	color: var(--hp-ink);
+}
+
+.hogpress-flash--ok {
+	border-left-color: var(--hp-success);
+	background: var(--hp-success-soft);
+}
+
+.hogpress-flash--error {
+	border-left-color: var(--hp-error);
+	background: var(--hp-error-soft);
+}
+
+/* Cards. */
+.hogpress-card {
+	background: var(--hp-canvas);
+	border: 1px solid var(--hp-border);
+	border-radius: var(--hp-radius);
+	padding: 20px 22px;
+	margin: 0 0 16px;
+}
+
+.hogpress-card__title {
+	font-family: var(--hp-font-title);
+	font-weight: 600;
+	color: var(--hp-ink);
+	font-size: 16px;
+	margin: 0 0 4px;
+}
+
+/* Help text. */
+.hogpress-help {
+	color: var(--hp-ink-soft);
+	font-size: 13px;
+	margin: 0 0 16px;
+	max-width: 60ch;
+}
+
+.hogpress-help--field {
+	margin: 6px 0 0;
+	font-size: 12px;
+	opacity: 0.92;
+}
+
+/* Fields. */
+.hogpress-field {
+	margin: 0 0 18px;
+}
+
+.hogpress-field:last-child {
+	margin-bottom: 0;
+}
+
+.hogpress-label {
+	display: block;
+	font-weight: 600;
+	color: var(--hp-ink);
+	font-size: 13px;
+	margin: 0 0 6px;
+}
+
+.hogpress-input {
+	border: 1px solid var(--hp-border-strong);
+	border-radius: var(--hp-radius-sm);
+	background: var(--hp-canvas);
+	color: var(--hp-ink);
+	padding: 7px 10px;
+	font-size: 14px;
+}
+
+.hogpress-input--mono {
+	font-family: var(--hp-font-mono);
+	font-size: 13px;
+}
+
+.hogpress-input:focus {
+	border-color: var(--hp-border-strong);
+	outline: 2px solid var(--hp-accent);
+	outline-offset: 1px;
+	box-shadow: none;
+}
+
+/* Toggles styled as switches. */
+.hogpress-switch {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	cursor: pointer;
+}
+
+.hogpress-switch input {
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+}
+
+.hogpress-switch__track {
+	flex: 0 0 auto;
+	position: relative;
+	width: 38px;
+	height: 22px;
+	border-radius: 999px;
+	background: var(--hp-canvas-soft);
+	border: 1px solid var(--hp-border-strong);
+	transition: background 0.15s ease, border-color 0.15s ease;
+	margin-top: 1px;
+}
+
+.hogpress-switch__thumb {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #fff;
+	border: 1px solid var(--hp-border-strong);
+	transition: transform 0.15s ease;
+}
+
+.hogpress-switch input:checked + .hogpress-switch__track {
+	background: var(--hp-accent);
+	border-color: var(--hp-accent);
+}
+
+.hogpress-switch input:checked + .hogpress-switch__track .hogpress-switch__thumb {
+	transform: translateX(16px);
+	border-color: var(--hp-accent);
+}
+
+.hogpress-switch input:focus-visible + .hogpress-switch__track {
+	outline: 2px solid var(--hp-accent);
+	outline-offset: 2px;
+}
+
+.hogpress-switch__text {
+	display: block;
+}
+
+.hogpress-switch__label {
+	display: block;
+	font-weight: 600;
+	color: var(--hp-ink);
+	font-size: 13px;
+}
+
+/* Primary action. */
+.hogpress-actions {
+	margin-top: 4px;
+}
+
+.hogpress-btn.button-primary {
+	background: var(--hp-accent);
+	border-color: var(--hp-accent);
+	color: var(--hp-accent-ink);
+	font-family: var(--hp-font-title);
+	font-weight: 600;
+	text-shadow: none;
+	box-shadow: none;
+}
+
+.hogpress-btn.button-primary:hover,
+.hogpress-btn.button-primary:focus {
+	background: #e59800;
+	border-color: #e59800;
+	color: var(--hp-accent-ink);
+}
+
+.hogpress-btn.button-primary:focus {
+	outline: 2px solid var(--hp-ink);
+	outline-offset: 1px;
+}
+
+/* Respect reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+	.hogpress-switch__track,
+	.hogpress-switch__thumb {
+		transition: none;
+	}
+}

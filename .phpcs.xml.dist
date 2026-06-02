@@ -28,6 +28,14 @@
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 	</rule>
 
+	<!-- Test method names are self-documenting; do not require doc comments in tests. -->
+	<rule ref="Squiz.Commenting.FunctionComment.Missing">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="Squiz.Commenting.ClassComment.Missing">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+
 	<!-- Enforce our text domain everywhere. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
