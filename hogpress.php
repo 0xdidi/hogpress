@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       HogPress – Analytics for PostHog
+ * Plugin Name:       HogPress – Deep Integration for PostHog
  * Plugin URI:        https://github.com/0xdidi/hogpress
  * Description:       Independent PostHog integration for WordPress. Connect your project, configure tracking, and send pageviews and events to PostHog. Not affiliated with PostHog.
  * Version:           0.1.0

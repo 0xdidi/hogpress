@@ -1,5 +1,5 @@
-=== HogPress – Analytics for PostHog ===
-Contributors: greatanthony
+=== HogPress – Deep Integration for PostHog ===
+Contributors: mcgreat
 Tags: analytics, posthog, tracking, events, statistics
 Requires at least: 5.8
 Tested up to: 7.0

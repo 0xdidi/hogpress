@@ -1,4 +1,4 @@
-# HogPress – Analytics for PostHog
+# HogPress – Deep Integration for PostHog
 
 An independent PostHog integration for WordPress. Connect your PostHog project,
 configure what gets tracked, and load PostHog on your site, with no code.
