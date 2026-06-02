@@ -1,0 +1,21 @@
+{
+	"name": "hogpress",
+	"version": "0.1.0",
+	"description": "Connect for PostHog: WordPress plugin development tooling (block build + local WordPress env).",
+	"license": "GPL-2.0-or-later",
+	"private": true,
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"env": "wp-env",
+		"env:start": "wp-env start",
+		"env:stop": "wp-env stop",
+		"env:destroy": "wp-env destroy",
+		"lint:php": "wp-env run cli --env-cwd=wp-content/plugins/hogpress composer lint",
+		"test:php": "wp-env run cli --env-cwd=wp-content/plugins/hogpress composer test"
+	},
+	"devDependencies": {
+		"@wordpress/env": "^10.0.0",
+		"@wordpress/scripts": "^30.0.0"
+	}
+}
