@@ -64,6 +64,11 @@ Yes. Choose "Self-hosted or reverse proxy" and enter your host URL. PostHog load
 
 By default PostHog uses its normal storage. Turn on "Privacy-first cookieless mode" to keep visitor state in memory only, so no PostHog cookie is set.
 
+== Screenshots ==
+
+1. Connect your PostHog project: paste the project API key and choose your region. The key is checked with PostHog before it is saved.
+2. Once connected, choose what to track with plain-language toggles: pageviews, autocapture, session recording, person profiles, and privacy-first cookieless mode.
+
 == External services ==
 
 This plugin connects to PostHog, the analytics service you configure. It is required for the plugin to do anything, because the plugin's purpose is to send your site's analytics to your PostHog project.

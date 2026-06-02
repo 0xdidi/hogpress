@@ -11,6 +11,7 @@
 
 namespace Hogpress\Platform\Frontend;
 
+use Hogpress\Platform\Identity\Identity;
 use Hogpress\Platform\Settings\Options;
 
 /**
@@ -46,7 +47,35 @@ final class Enqueue {
 		$key = Options::project_api_key();
 		$js  = $this->loader() . "\n" . $this->init_call( $key, $this->build_config() );
 
+		// Tie a logged-in user to a stable PostHog person. Calling identify on
+		// the next page load after login merges the prior anonymous activity into
+		// the identified person. posthog-js de-duplicates repeat identify calls,
+		// so emitting this each page load does not spam $identify events.
+		$identify = $this->identify_call();
+		if ( '' !== $identify ) {
+			$js .= "\n" . $identify;
+		}
+
 		wp_print_inline_script_tag( $js, array( 'id' => 'hogpress-posthog-js' ) );
+	}
+
+	/**
+	 * Build the posthog.identify(...) call for the logged-in user, or '' if none.
+	 *
+	 * @return string
+	 */
+	private function identify_call() {
+		$identity = Identity::current_user_identity();
+		if ( null === $identity || '' === $identity['distinct_id'] ) {
+			return '';
+		}
+
+		$args = wp_json_encode( $identity['distinct_id'] );
+		if ( ! empty( $identity['properties'] ) ) {
+			$args .= ',' . wp_json_encode( $identity['properties'] );
+		}
+
+		return 'posthog.identify(' . $args . ');';
 	}
 
 	/**
