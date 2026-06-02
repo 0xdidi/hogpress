@@ -32,7 +32,7 @@ final class Options {
 	private static $cache = null;
 
 	/**
-	 * Default settings. These are the shape; later phases extend it.
+	 * Default settings.
 	 *
 	 * @return array<string,mixed>
 	 */

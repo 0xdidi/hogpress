@@ -96,7 +96,11 @@ final class Enqueue {
 	/**
 	 * The official posthog-js array loader snippet.
 	 *
-	 * Loads /static/array.js from the assets host derived from api_host (the
+	 * This is PostHog's standard, publicly documented loader. The human-readable
+	 * source lives in the posthog-js project:
+	 * https://github.com/PostHog/posthog-js and https://posthog.com/docs/libraries/js
+	 *
+	 * It loads /static/array.js from the assets host derived from api_host (the
 	 * snippet swaps ".i.posthog.com" for "-assets.i.posthog.com"; for custom
 	 * hosts the string is unchanged and it loads from that host directly).
 	 *

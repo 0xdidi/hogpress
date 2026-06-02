@@ -14,18 +14,11 @@ use Hogpress\Platform\Frontend\Enqueue;
 /**
  * Wires the plugin together on init.
  *
- * This is the WordPress glue entry point. It is intentionally thin: it loads
- * text domain and, in later phases, registers settings, listeners, blocks, and
- * the admin UI. All business logic lives in the platform-agnostic Core.
+ * This is the WordPress glue entry point. It is intentionally thin: it registers
+ * the settings, admin UI, and front-end injection. All business logic lives in
+ * the platform-agnostic Core.
  */
 final class Plugin {
-
-	/**
-	 * Option key under which the text domain / naming decision lives.
-	 *
-	 * @var string
-	 */
-	const TEXT_DOMAIN = 'hogpress';
 
 	/**
 	 * Singleton instance.
@@ -69,7 +62,7 @@ final class Plugin {
 		}
 		$this->booted = true;
 
-		add_action( 'init', array( $this, 'load_textdomain' ) );
+		// Translations for WordPress.org-hosted plugins are loaded automatically.
 
 		// Admin UI.
 		( new SettingsPage() )->register();
@@ -77,21 +70,6 @@ final class Plugin {
 
 		// Front-end posthog-js injection.
 		( new Enqueue() )->register();
-
-		// Subsequent phases register their components here.
-	}
-
-	/**
-	 * Load the plugin text domain for translations.
-	 *
-	 * @return void
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain(
-			self::TEXT_DOMAIN,
-			false,
-			dirname( plugin_basename( HOGPRESS_FILE ) ) . '/languages'
-		);
 	}
 
 	/**
@@ -100,8 +78,7 @@ final class Plugin {
 	 * @return void
 	 */
 	public static function activate() {
-		// Phase 0: nothing to set up yet. Later phases seed default options here.
-		// Flush rewrite rules defensively in case later phases add rewrites.
+		// Flush rewrite rules defensively in case future rewrites are added.
 		flush_rewrite_rules();
 	}
 

@@ -1,23 +1,19 @@
 <?php
 /**
- * Plugin Name:       Connect for PostHog
- * Plugin URI:        https://example.com/hogpress
- * Description:       Install, configure, and get real value from PostHog on WordPress: server-side events, correct identity stitching, no-flicker feature flags, and dashboards provisioned for you.
+ * Plugin Name:       HogPress – Analytics for PostHog
+ * Plugin URI:        https://github.com/0xdidi/hogpress
+ * Description:       Independent PostHog integration for WordPress. Connect your project, configure tracking, and send pageviews and events to PostHog. Not affiliated with PostHog.
  * Version:           0.1.0
  * Requires at least: 5.8
  * Requires PHP:      8.2
  * Author:            Great Anthony
- * Author URI:        https://example.com
+ * Author URI:        https://greatanthony.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       hogpress
  * Domain Path:       /languages
  *
  * @package Hogpress
- *
- * NOTE: "Connect for PostHog" is a placeholder public name. The final name and
- * text domain are an open decision (PRD section 11) to resolve before Phase 7.
- * The codename "hogpress" is used for the text domain, prefixes, and namespace.
  */
 
 // Prevent direct access.
@@ -43,7 +39,7 @@ define( 'HOGPRESS_MIN_PHP', '8.2' );
 function hogpress_php_version_notice() {
 	$message = sprintf(
 		/* translators: 1: required PHP version, 2: current PHP version. */
-		esc_html__( 'Connect for PostHog requires PHP %1$s or higher. You are running PHP %2$s. The plugin has been kept inactive to avoid breaking your site.', 'hogpress' ),
+		esc_html__( 'HogPress requires PHP %1$s or higher. You are running PHP %2$s. The plugin has been kept inactive to avoid breaking your site.', 'hogpress' ),
 		esc_html( HOGPRESS_MIN_PHP ),
 		esc_html( PHP_VERSION )
 	);

@@ -88,7 +88,7 @@ final class Notices {
 		?>
 		<div class="notice notice-info">
 			<p>
-				<strong><?php esc_html_e( 'Connect for PostHog', 'hogpress' ); ?></strong>
+				<strong><?php esc_html_e( 'HogPress', 'hogpress' ); ?></strong>
 				&nbsp;&mdash;&nbsp;
 				<?php esc_html_e( 'Finish setup to start sending events to PostHog. It takes about a minute.', 'hogpress' ); ?>
 			</p>

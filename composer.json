@@ -1,6 +1,6 @@
 {
 	"name": "greatanthony/hogpress",
-	"description": "Connect for PostHog: a WordPress plugin for PostHog with server-side events, identity stitching, no-flicker feature flags, and dashboard provisioning.",
+	"description": "HogPress: an independent PostHog integration for WordPress.",
 	"type": "wordpress-plugin",
 	"version": "0.1.0",
 	"license": "GPL-2.0-or-later",

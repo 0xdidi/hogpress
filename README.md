@@ -1,83 +1,47 @@
-# Connect for PostHog (codename: `hogpress`)
+# HogPress – Analytics for PostHog
 
-A WordPress plugin that lets a non-developer install, configure, and get real
-value from PostHog: server-side event capture, correct identity stitching,
-no-flicker feature flags, and dashboards provisioned into PostHog on setup.
+An independent PostHog integration for WordPress. Connect your PostHog project,
+configure what gets tracked, and load PostHog on your site, with no code.
 
-> **Naming:** "Connect for PostHog" is a placeholder. The final public name and
-> text domain are an open decision (see `docs/01_PRD.md` section 11) to resolve
-> before WordPress.org submission. The codename `hogpress` is used for the text
-> domain, prefixes, and namespace.
+HogPress is not affiliated with, endorsed by, or sponsored by PostHog.
 
-This is the developer README. End-user docs live in `readme.txt` (added in a
-later phase).
+This is the developer README. End-user documentation lives in `readme.txt`.
 
 ## Architecture
 
 Two layers with a hard line between them:
 
-- **`src/Core/`** — platform-agnostic PHP. **Zero WordPress function calls.**
-  Takes plain data in, returns plain data out. This is what a future Shopify
-  build reuses. (Identity resolver, event schema, server client, flag
-  evaluator, dashboard provisioner.)
+- **`src/Core/`** — platform-agnostic PHP with **zero WordPress function calls**.
+  Plain data in, plain data out (host resolution, the identity resolver). This is
+  the reusable heart of the plugin.
 - **`src/Platform/`** — WordPress glue. Adapts WordPress (hooks, options, users,
-  admin UI, blocks) to the Core.
-
-See `docs/02_TECHNICAL_SPEC.md` for the full design.
+  admin UI) to the Core.
 
 ## Requirements
 
 - **Runtime:** PHP 8.2+, WordPress 5.8+. WooCommerce is optional.
-- **Dev:** PHP 8.2+ and Composer (for PHPUnit/PHPCS tooling), Node 18+, and
-  Docker (for `wp-env`).
-
-> **PHP 8.2 minimum:** the original spec targeted PHP 7.4, but PostHog's official
-> `posthog-php` SDK dropped 7.4 support (4.x requires PHP 8.2+). We use the
-> current SDK for its built-in graceful degradation and `evaluateFlags()` API, so
-> the minimum is PHP 8.2. See `docs/BUILD_NOTES.md`.
+- **Dev:** PHP 8.2+ and Composer, Node 18+, and Docker (for `wp-env`).
 
 ## Local development
 
-### Install tooling
-
 ```bash
-composer install   # PHP dev tools + vendored posthog-php
-npm install        # block build + wp-env
+composer install   # PHP dev tools + posthog-php
+npm install        # wp-env + build tooling
+npm run env:start  # WordPress at http://localhost:8888 (admin / password)
 ```
 
-### Run a real WordPress
-
-`wp-env` uses Docker. Make sure Docker is running, then:
+### Quality checks
 
 ```bash
-npm run env:start   # boots WordPress at http://localhost:8888 with the plugin active
-npm run env:stop
+composer lint       # PHPCS (WordPress Coding Standards)
+composer lint:fix   # auto-fix
+composer test:unit  # PHPUnit unit tests (Core)
 ```
 
-Admin: http://localhost:8888/wp-admin (user `admin`, password `password`).
-
-### Coding standards (PHPCS, WordPress ruleset)
+### Build the distributable ZIP
 
 ```bash
-composer lint       # report violations
-composer lint:fix   # auto-fix what can be fixed
-```
-
-PHPCS must pass with zero errors before any phase is considered done.
-
-### Tests
-
-```bash
-composer test:unit  # platform-agnostic unit tests (Core), run on host PHP
-```
-
-WordPress integration tests (added in later phases) run inside `wp-env`.
-
-### Building the feature-flag block
-
-```bash
-npm run build       # production block build
-npm run start       # watch mode during development
+bin/build-zip.sh    # produces dist/hogpress.zip (production files only)
 ```
 
 ## Repository layout
@@ -85,17 +49,14 @@ npm run start       # watch mode during development
 ```
 hogpress.php            Main plugin file: header, guards, bootstrap
 uninstall.php           Uninstall cleanup
-src/Core/               Platform-agnostic business logic (no WP calls)
+readme.txt              WordPress.org readme
+src/Core/               Platform-agnostic logic (no WP calls)
 src/Platform/           WordPress glue
-blocks/                 Gutenberg block source
-assets/                 Built assets, small admin JS/CSS
-vendor/                 Vendored posthog-php (committed)
-tests/                  PHPUnit unit + integration tests
-languages/              .pot translation template
-docs/                   PRD, technical spec, build plan, agent instructions
+assets/                 Admin CSS/JS
+languages/              Translation template (.pot)
+tests/                  PHPUnit tests
 ```
 
-## Build process
+## License
 
-The build proceeds strictly phase by phase per `docs/03_BUILD_PLAN.md`. Each
-phase ends in a working, testable state and a commit naming the phase.
+GPL-2.0-or-later.

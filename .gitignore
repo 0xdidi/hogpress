@@ -18,9 +18,15 @@
 # wp-env / local
 /.wp-env.override.json
 
-# Playwright MCP artifacts and local verification screenshots
+# Local build output and verification artifacts
+/dist/
 /.playwright-mcp/
 /phase*.png
+/*-plugin-check-*.md
+
+# Local tooling directories (never shipped or committed)
+/.claude/
+/.remember/
 
 # OS / editor
 .DS_Store
@@ -30,7 +36,7 @@ Thumbs.db
 /.vscode/
 
 # Composer: vendor/ is NOT committed (it would include heavy dev tooling).
-# composer.lock IS committed for reproducible installs. The distribution ZIP
-# (Phase 7) is built with `composer install --no-dev` so the shipped plugin
-# vendors posthog-php and needs no Composer step at runtime.
+# composer.lock IS committed for reproducible installs. The distribution ZIP is
+# built with `composer install --no-dev` so the shipped plugin vendors
+# posthog-php and needs no Composer step at runtime.
 /vendor/

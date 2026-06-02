@@ -1,7 +1,7 @@
 {
 	"name": "hogpress",
 	"version": "0.1.0",
-	"description": "Connect for PostHog: WordPress plugin development tooling (block build + local WordPress env).",
+	"description": "HogPress: WordPress plugin development tooling (build + local WordPress env).",
 	"license": "GPL-2.0-or-later",
 	"private": true,
 	"scripts": {

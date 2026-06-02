@@ -1,0 +1,99 @@
+=== HogPress – Analytics for PostHog ===
+Contributors: greatanthony
+Tags: analytics, posthog, tracking, events, statistics
+Requires at least: 5.8
+Tested up to: 7.0
+Requires PHP: 8.2
+Stable tag: 0.1.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Independent PostHog integration for WordPress. Connect your project and send pageviews and events to PostHog. Not affiliated with PostHog.
+
+== Description ==
+
+HogPress is a simple, independent way to add PostHog to WordPress: PostHog for WordPress, without touching code. Enter your PostHog project API key, choose your region, and HogPress loads PostHog on your site with the settings you pick.
+
+HogPress is an independent project. It is not affiliated with, endorsed by, or sponsored by PostHog. "PostHog" is a trademark of its respective owner and is used here only to describe what this plugin connects to.
+
+= What it does today =
+
+* Connect to PostHog Cloud (US or EU) or your own self-hosted or reverse-proxy host.
+* Your project API key is checked with a live test call before it is saved, so you know right away if it is correct.
+* Loads PostHog (posthog-js) from the host you configure, so self-hosted and reverse-proxy setups work without code.
+* Plain-language toggles for what gets captured: pageviews, autocapture (clicks and form interactions), session recording, and person profile mode.
+* Privacy-first cookieless mode that keeps visitor state in memory, so no PostHog cookie is set.
+* A clean settings screen that fits WordPress and stays out of your way.
+
+= On the roadmap =
+
+Planned for future releases:
+
+* Server-side event capture so events still arrive when client-side requests are blocked.
+* Matching one visitor across anonymous and logged-in sessions (identity stitching).
+* WooCommerce events (product views, add to cart, checkout, completed orders).
+* A no-flicker feature-flag block and shortcode evaluated on the server.
+* Optional starter dashboards created in your PostHog project.
+* WordPress Consent API support.
+
+== Installation ==
+
+1. Install and activate the plugin.
+2. In the WordPress admin, open the "PostHog" menu.
+3. Paste your PostHog project API key and choose your region (US, EU, or self-hosted / reverse proxy).
+4. Save. HogPress checks the key with PostHog before saving and tells you if it worked.
+5. Choose what to track, then save again. PostHog will start receiving data from your site.
+
+You can find your project API key in PostHog under Settings, Project, Project API key. It is a public key and is safe to use in the browser.
+
+== Frequently Asked Questions ==
+
+= Is this an official PostHog plugin? =
+
+No. HogPress is an independent project and is not affiliated with or endorsed by PostHog.
+
+= Do I need a PostHog account? =
+
+Yes. You need a PostHog project and its project API key. PostHog offers a free tier. See https://posthog.com.
+
+= Does it work with self-hosted PostHog or a reverse proxy? =
+
+Yes. Choose "Self-hosted or reverse proxy" and enter your host URL. PostHog loads from that host.
+
+= Will it set cookies? =
+
+By default PostHog uses its normal storage. Turn on "Privacy-first cookieless mode" to keep visitor state in memory only, so no PostHog cookie is set.
+
+== External services ==
+
+This plugin connects to PostHog, the analytics service you configure. It is required for the plugin to do anything, because the plugin's purpose is to send your site's analytics to your PostHog project.
+
+What is sent and when:
+
+* When you save your settings in the admin, the plugin makes one request to the PostHog feature-flags endpoint (for example https://us.i.posthog.com/flags) with your project API key to confirm the key and host are valid. This request does not record any analytics event.
+* On your site's front end, after you have connected and only when configured, the plugin loads PostHog (posthog-js) from the host you choose (PostHog US cloud, EU cloud, or your own host). PostHog then sends visitor analytics such as pageviews and, if enabled, clicks and form interactions and session recordings, to your PostHog project. The exact data depends on the toggles you choose.
+
+The host the data is sent to is the one you configure:
+
+* US cloud: https://us.i.posthog.com
+* EU cloud: https://eu.i.posthog.com
+* Self-hosted or reverse proxy: the URL you enter
+
+PostHog terms of service: https://posthog.com/terms
+PostHog privacy policy: https://posthog.com/privacy
+
+== Privacy ==
+
+No analytics are sent until you enter a PostHog project API key and connect. You control what is captured with the tracking toggles, and you can turn on cookieless mode so no PostHog cookie is set.
+
+You are responsible for telling your visitors what you collect and for obtaining any consent your jurisdiction requires. Support for the WordPress Consent API is planned for a future release.
+
+== Changelog ==
+
+= 0.1.0 =
+* First release: connect to PostHog (US, EU, or self-hosted / reverse proxy), validate the key before saving, and load PostHog on the front end with tracking toggles (pageviews, autocapture, session recording, person profiles, cookieless mode).
+
+== Upgrade Notice ==
+
+= 0.1.0 =
+First release.

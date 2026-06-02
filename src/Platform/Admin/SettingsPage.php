@@ -58,8 +58,8 @@ final class SettingsPage {
 	 */
 	public function add_menu() {
 		add_menu_page(
-			__( 'Connect for PostHog', 'hogpress' ),
-			__( 'PostHog', 'hogpress' ),
+			__( 'HogPress', 'hogpress' ),
+			__( 'HogPress', 'hogpress' ),
 			'manage_options',
 			self::SLUG,
 			array( $this, 'render' ),
@@ -225,7 +225,7 @@ final class SettingsPage {
 		?>
 		<div class="wrap hogpress-wrap">
 			<div class="hogpress-topbar">
-				<h1 class="hogpress-title"><?php esc_html_e( 'Connect for PostHog', 'hogpress' ); ?></h1>
+				<h1 class="hogpress-title"><?php esc_html_e( 'HogPress', 'hogpress' ); ?></h1>
 				<?php if ( $connected ) : ?>
 					<span class="hogpress-pill hogpress-pill--ok">
 						<span class="hogpress-dot"></span><?php esc_html_e( 'Connected', 'hogpress' ); ?>
