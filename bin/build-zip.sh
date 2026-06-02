@@ -40,15 +40,19 @@ find "${DEST}" -name ".gitkeep" -delete
 find "${DEST}" -type d -name ".git" -prune -exec rm -rf {} +
 
 # Trim non-runtime files from vendored dependencies (keep licenses + lib code).
+# WordPress.org rejects shell scripts and various dev files, so strip them.
 find "${DEST}/vendor" -type d \( \
 	-iname tests -o -iname test -o -iname examples -o -iname ".github" \
-	-o -iname ".changeset" -o -iname scripts -o -iname Test \
+	-o -iname ".changeset" -o -iname scripts -o -iname Test -o -iname bin \
 	\) -prune -exec rm -rf {} +
 find "${DEST}/vendor" -type f \( \
-	-iname ".gitignore" -o -iname ".gitattributes" -o -iname "*.dist" \
+	-iname "*.sh" -o -iname ".gitignore" -o -iname ".gitattributes" -o -iname "*.dist" \
 	-o -iname "phpunit*.xml*" -o -iname "RELEASING.md" -o -iname "CONTRIBUTING.md" \
-	-o -iname "CHANGELOG.md" \
+	-o -iname "CHANGELOG.md" -o -iname "Makefile" -o -iname "*.yml" -o -iname "*.yaml" \
 	\) -delete
+
+# Remove ALL hidden files/dirs anywhere in the package (WordPress.org disallows them).
+find "${DEST}" -depth -name ".*" ! -name "." ! -name ".." -exec rm -rf {} +
 
 # Build the ZIP with the slug as the top-level folder.
 ( cd "${STAGE}" && zip -rq "${DIST}/${SLUG}.zip" "${SLUG}" )
