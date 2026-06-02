@@ -20,13 +20,6 @@
 
 # Local build output and verification artifacts
 /dist/
-/.playwright-mcp/
-/phase*.png
-/*-plugin-check-*.md
-
-# Local tooling directories (never shipped or committed)
-/.claude/
-/.remember/
 
 # OS / editor
 .DS_Store
