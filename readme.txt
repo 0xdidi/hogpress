@@ -23,6 +23,7 @@ HogPress is an independent project. It is not affiliated with, endorsed by, or s
 * Loads PostHog (posthog-js) from the host you configure, so self-hosted and reverse-proxy setups work without code.
 * Plain-language toggles for what gets captured: pageviews, autocapture (clicks and form interactions), session recording, and person profile mode.
 * Privacy-first cookieless mode that keeps visitor state in memory, so no PostHog cookie is set.
+* Identity: tie logged-in WordPress users to one PostHog person across anonymous and logged-in sessions, using a stable hashed identifier (never the raw user ID). You choose whether to identify logged-in users and which properties to send (email, name, role).
 * A clean settings screen that fits WordPress and stays out of your way.
 
 = On the roadmap =
@@ -30,7 +31,6 @@ HogPress is an independent project. It is not affiliated with, endorsed by, or s
 Planned for future releases:
 
 * Server-side event capture so events still arrive when client-side requests are blocked.
-* Matching one visitor across anonymous and logged-in sessions (identity stitching).
 * WooCommerce events (product views, add to cart, checkout, completed orders).
 * A no-flicker feature-flag block and shortcode evaluated on the server.
 * Optional starter dashboards created in your PostHog project.
@@ -96,7 +96,7 @@ You are responsible for telling your visitors what you collect and for obtaining
 == Changelog ==
 
 = 0.1.0 =
-* First release: connect to PostHog (US, EU, or self-hosted / reverse proxy), validate the key before saving, and load PostHog on the front end with tracking toggles (pageviews, autocapture, session recording, person profiles, cookieless mode).
+* First release: connect to PostHog (US, EU, or self-hosted / reverse proxy), validate the key before saving, load PostHog on the front end with tracking toggles (pageviews, autocapture, session recording, person profiles, cookieless mode), and tie logged-in users to one PostHog person with a stable hashed identifier (configurable, with per-property control).
 
 == Upgrade Notice ==
 

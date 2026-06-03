@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-02T19:47:40+00:00\n"
+"POT-Creation-Date: 2026-06-03T00:15:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: hogpress\n"
@@ -48,7 +48,7 @@ msgstr ""
 #: src/Platform/Admin/Notices.php:91
 #: src/Platform/Admin/SettingsPage.php:61
 #: src/Platform/Admin/SettingsPage.php:62
-#: src/Platform/Admin/SettingsPage.php:228
+#: src/Platform/Admin/SettingsPage.php:229
 msgid "HogPress"
 msgstr ""
 
@@ -80,111 +80,151 @@ msgstr ""
 msgid "You do not have permission to view this page."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:231
+#: src/Platform/Admin/SettingsPage.php:232
 msgid "Connected"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:235
+#: src/Platform/Admin/SettingsPage.php:236
 msgid "Not connected"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:251
+#: src/Platform/Admin/SettingsPage.php:252
 msgid "Connection"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:253
+#: src/Platform/Admin/SettingsPage.php:254
 msgid "Paste your PostHog project API key and pick your region. We check it before saving."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:257
+#: src/Platform/Admin/SettingsPage.php:258
 msgid "Project API key"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:269
+#: src/Platform/Admin/SettingsPage.php:270
 msgid "Find this in PostHog under Settings, Project, Project API key. It is safe to expose in the browser."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:274
+#: src/Platform/Admin/SettingsPage.php:275
 msgid "Region"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:276
+#: src/Platform/Admin/SettingsPage.php:277
 msgid "US cloud (us.i.posthog.com)"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:277
+#: src/Platform/Admin/SettingsPage.php:278
 msgid "EU cloud (eu.i.posthog.com)"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:278
+#: src/Platform/Admin/SettingsPage.php:279
 msgid "Self-hosted or reverse proxy"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:283
+#: src/Platform/Admin/SettingsPage.php:284
 msgid "Custom host URL"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:295
+#: src/Platform/Admin/SettingsPage.php:296
 msgid "The full URL of your PostHog instance or reverse proxy, including https://."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:301
+#: src/Platform/Admin/SettingsPage.php:302
 msgid "Tracking"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:303
+#: src/Platform/Admin/SettingsPage.php:304
 msgid "Choose what PostHog captures in the browser. You can change these any time."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:309
+#: src/Platform/Admin/SettingsPage.php:311
 msgid "Track pageviews"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:310
+#: src/Platform/Admin/SettingsPage.php:312
 msgid "Record a pageview each time someone loads a page."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:315
+#: src/Platform/Admin/SettingsPage.php:318
 msgid "Autocapture clicks and forms"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:316
+#: src/Platform/Admin/SettingsPage.php:319
 msgid "Automatically capture clicks, form submissions, and other interactions."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:321
+#: src/Platform/Admin/SettingsPage.php:325
 msgid "Record sessions"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:322
+#: src/Platform/Admin/SettingsPage.php:326
 msgid "Capture session replays. Heavier, so it is off by default."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:327
+#: src/Platform/Admin/SettingsPage.php:332
 msgid "Privacy-first cookieless mode"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:328
+#: src/Platform/Admin/SettingsPage.php:333
 msgid "Keep visitor state in memory only, so no PostHog cookie is set."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:334
+#: src/Platform/Admin/SettingsPage.php:339
 msgid "Person profiles"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:336
+#: src/Platform/Admin/SettingsPage.php:341
 msgid "Identified people only (recommended)"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:337
+#: src/Platform/Admin/SettingsPage.php:342
 msgid "Everyone, including anonymous"
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:340
+#: src/Platform/Admin/SettingsPage.php:345
 msgid "Identified-only keeps anonymous visitors lightweight and is the usual choice."
 msgstr ""
 
-#: src/Platform/Admin/SettingsPage.php:347
+#: src/Platform/Admin/SettingsPage.php:351
+msgid "Identity"
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:353
+msgid "Tie logged-in WordPress users to a PostHog person so their activity is one profile across sessions. The identifier is a hash, never the raw user ID."
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:365
+msgid "Identify logged-in users"
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:366
+msgid "Send a stable, hashed identifier for logged-in users so sessions merge into one person."
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:372
+msgid "Send email address"
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:373
+msgid "Attach the user email to their PostHog person profile."
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:379
+msgid "Send display name"
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:380
+msgid "Attach the user display name to their PostHog person profile."
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:386
+msgid "Send role"
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:387
+msgid "Attach the user primary role to their PostHog person profile."
+msgstr ""
+
+#: src/Platform/Admin/SettingsPage.php:395
 msgid "Validate and save"
 msgstr ""
 

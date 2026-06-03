@@ -56,6 +56,11 @@ final class Identity {
 			return null;
 		}
 
+		$settings = Options::identity();
+		if ( empty( $settings['identify_logged_in'] ) ) {
+			return null;
+		}
+
 		$user = wp_get_current_user();
 		if ( ! $user || ! $user->ID ) {
 			return null;
@@ -63,18 +68,21 @@ final class Identity {
 
 		$distinct_id = Resolver::stable_user_id( $user->ID, self::salt() );
 
-		$role  = ( is_array( $user->roles ) && ! empty( $user->roles ) ) ? (string) reset( $user->roles ) : '';
-		$props = Resolver::person_properties(
-			array(
-				'email' => $user->user_email,
-				'name'  => $user->display_name,
-				'role'  => $role,
-			)
-		);
+		// Only send the person properties the site owner has opted into.
+		$raw_props = array();
+		if ( ! empty( $settings['send_email'] ) ) {
+			$raw_props['email'] = $user->user_email;
+		}
+		if ( ! empty( $settings['send_name'] ) ) {
+			$raw_props['name'] = $user->display_name;
+		}
+		if ( ! empty( $settings['send_role'] ) ) {
+			$raw_props['role'] = ( is_array( $user->roles ) && ! empty( $user->roles ) ) ? (string) reset( $user->roles ) : '';
+		}
 
 		return array(
 			'distinct_id' => $distinct_id,
-			'properties'  => $props,
+			'properties'  => Resolver::person_properties( $raw_props ),
 		);
 	}
 

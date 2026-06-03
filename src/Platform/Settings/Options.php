@@ -48,6 +48,12 @@ final class Options {
 				'person_profiles'   => 'identified_only',
 				'cookieless'        => false,
 			),
+			'identity'        => array(
+				'identify_logged_in' => true,
+				'send_email'         => true,
+				'send_name'          => true,
+				'send_role'          => true,
+			),
 		);
 	}
 
@@ -66,13 +72,18 @@ final class Options {
 			$stored = array();
 		}
 
-		$defaults         = self::defaults();
-		$merged           = array_merge( $defaults, $stored );
-		$merged['client'] = array_merge(
-			$defaults['client'],
-			isset( $stored['client'] ) && is_array( $stored['client'] ) ? $stored['client'] : array()
-		);
-		self::$cache      = $merged;
+		$defaults = self::defaults();
+		$merged   = array_merge( $defaults, $stored );
+
+		// Deep-merge each known sub-array so partial stored data keeps defaults.
+		foreach ( array( 'client', 'identity' ) as $group ) {
+			$merged[ $group ] = array_merge(
+				$defaults[ $group ],
+				isset( $stored[ $group ] ) && is_array( $stored[ $group ] ) ? $stored[ $group ] : array()
+			);
+		}
+
+		self::$cache = $merged;
 
 		return $merged;
 	}
@@ -143,6 +154,15 @@ final class Options {
 	}
 
 	/**
+	 * The identity configuration sub-array.
+	 *
+	 * @return array<string,mixed>
+	 */
+	public static function identity() {
+		return (array) self::all()['identity'];
+	}
+
+	/**
 	 * Whether the plugin has enough to load posthog-js (key + resolvable host).
 	 *
 	 * @return bool
@@ -197,6 +217,18 @@ final class Options {
 				: 'identified_only';
 		}
 		$current['client'] = $client;
+
+		// Identity toggles. A hidden marker ensures this is processed even when
+		// every checkbox is unchecked (unchecked checkboxes are not posted).
+		if ( isset( $input['identity'] ) && is_array( $input['identity'] ) ) {
+			$raw_identity                   = wp_unslash( $input['identity'] );
+			$identity                       = $current['identity'];
+			$identity['identify_logged_in'] = ! empty( $raw_identity['identify_logged_in'] );
+			$identity['send_email']         = ! empty( $raw_identity['send_email'] );
+			$identity['send_name']          = ! empty( $raw_identity['send_name'] );
+			$identity['send_role']          = ! empty( $raw_identity['send_role'] );
+			$current['identity']            = $identity;
+		}
 
 		return $current;
 	}

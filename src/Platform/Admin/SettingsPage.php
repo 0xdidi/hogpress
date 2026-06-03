@@ -221,6 +221,7 @@ final class SettingsPage {
 		$region      = Options::region();
 		$custom_host = Options::custom_host();
 		$client      = Options::client();
+		$identity    = Options::identity();
 		$is_custom   = Host::REGION_CUSTOM === $region;
 		?>
 		<div class="wrap hogpress-wrap">
@@ -305,24 +306,28 @@ final class SettingsPage {
 
 					<?php
 					$this->toggle(
+						'client',
 						'pageviews',
 						__( 'Track pageviews', 'hogpress' ),
 						__( 'Record a pageview each time someone loads a page.', 'hogpress' ),
 						! empty( $client['pageviews'] )
 					);
 					$this->toggle(
+						'client',
 						'autocapture',
 						__( 'Autocapture clicks and forms', 'hogpress' ),
 						__( 'Automatically capture clicks, form submissions, and other interactions.', 'hogpress' ),
 						! empty( $client['autocapture'] )
 					);
 					$this->toggle(
+						'client',
 						'session_recording',
 						__( 'Record sessions', 'hogpress' ),
 						__( 'Capture session replays. Heavier, so it is off by default.', 'hogpress' ),
 						! empty( $client['session_recording'] )
 					);
 					$this->toggle(
+						'client',
 						'cookieless',
 						__( 'Privacy-first cookieless mode', 'hogpress' ),
 						__( 'Keep visitor state in memory only, so no PostHog cookie is set.', 'hogpress' ),
@@ -342,6 +347,49 @@ final class SettingsPage {
 					</div>
 				</section>
 
+				<section class="hogpress-card">
+					<h2 class="hogpress-card__title"><?php esc_html_e( 'Identity', 'hogpress' ); ?></h2>
+					<p class="hogpress-help">
+						<?php esc_html_e( 'Tie logged-in WordPress users to a PostHog person so their activity is one profile across sessions. The identifier is a hash, never the raw user ID.', 'hogpress' ); ?>
+					</p>
+
+					<?php
+					// Hidden marker so this section is processed even if every box is unchecked.
+					?>
+					<input type="hidden" name="hogpress[identity][present]" value="1" />
+
+					<?php
+					$this->toggle(
+						'identity',
+						'identify_logged_in',
+						__( 'Identify logged-in users', 'hogpress' ),
+						__( 'Send a stable, hashed identifier for logged-in users so sessions merge into one person.', 'hogpress' ),
+						! empty( $identity['identify_logged_in'] )
+					);
+					$this->toggle(
+						'identity',
+						'send_email',
+						__( 'Send email address', 'hogpress' ),
+						__( 'Attach the user email to their PostHog person profile.', 'hogpress' ),
+						! empty( $identity['send_email'] )
+					);
+					$this->toggle(
+						'identity',
+						'send_name',
+						__( 'Send display name', 'hogpress' ),
+						__( 'Attach the user display name to their PostHog person profile.', 'hogpress' ),
+						! empty( $identity['send_name'] )
+					);
+					$this->toggle(
+						'identity',
+						'send_role',
+						__( 'Send role', 'hogpress' ),
+						__( 'Attach the user primary role to their PostHog person profile.', 'hogpress' ),
+						! empty( $identity['send_role'] )
+					);
+					?>
+				</section>
+
 				<div class="hogpress-actions">
 					<button type="submit" class="button button-primary button-hero hogpress-btn">
 						<?php esc_html_e( 'Validate and save', 'hogpress' ); ?>
@@ -355,21 +403,22 @@ final class SettingsPage {
 	/**
 	 * Render a single labeled toggle (checkbox styled as a switch).
 	 *
-	 * @param string $name    Client setting key.
+	 * @param string $group   Settings group (e.g. 'client', 'identity').
+	 * @param string $name    Setting key within the group.
 	 * @param string $label   Visible label.
 	 * @param string $help    One-line help text.
 	 * @param bool   $checked Whether currently enabled.
 	 * @return void
 	 */
-	private function toggle( $name, $label, $help, $checked ) {
-		$id = 'hogpress-toggle-' . $name;
+	private function toggle( $group, $name, $label, $help, $checked ) {
+		$id = 'hogpress-toggle-' . $group . '-' . $name;
 		?>
 		<div class="hogpress-field hogpress-toggle">
 			<label class="hogpress-switch" for="<?php echo esc_attr( $id ); ?>">
 				<input
 					type="checkbox"
 					id="<?php echo esc_attr( $id ); ?>"
-					name="hogpress[client][<?php echo esc_attr( $name ); ?>]"
+					name="hogpress[<?php echo esc_attr( $group ); ?>][<?php echo esc_attr( $name ); ?>]"
 					value="1"
 					<?php checked( $checked ); ?>
 				/>
