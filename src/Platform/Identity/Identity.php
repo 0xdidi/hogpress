@@ -55,14 +55,26 @@ final class Identity {
 		if ( ! is_user_logged_in() ) {
 			return null;
 		}
+		return self::identity_for( wp_get_current_user() );
+	}
 
+	/**
+	 * Build the identity for a specific user, respecting the identity settings.
+	 *
+	 * Used by login/registration hooks where the current-user globals are not
+	 * yet reliable. Returns null when identifying users is disabled or the user
+	 * is invalid.
+	 *
+	 * @param \WP_User|null $user A WordPress user object.
+	 * @return array{distinct_id:string,properties:array<string,string>}|null
+	 */
+	public static function identity_for( $user ) {
 		$settings = Options::identity();
 		if ( empty( $settings['identify_logged_in'] ) ) {
 			return null;
 		}
 
-		$user = wp_get_current_user();
-		if ( ! $user || ! $user->ID ) {
+		if ( ! $user || ! isset( $user->ID ) || ! $user->ID ) {
 			return null;
 		}
 
@@ -84,6 +96,16 @@ final class Identity {
 			'distinct_id' => $distinct_id,
 			'properties'  => Resolver::person_properties( $raw_props ),
 		);
+	}
+
+	/**
+	 * The stable distinct id for a given user (ignores identity on/off setting).
+	 *
+	 * @param int $user_id WordPress user id.
+	 * @return string
+	 */
+	public static function stable_id_for_user( $user_id ) {
+		return Resolver::stable_user_id( (int) $user_id, self::salt() );
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * Plugin Name:       HogPress – Deep Integration for PostHog
  * Plugin URI:        https://github.com/0xdidi/hogpress
  * Description:       Independent PostHog integration for WordPress. Connect your project, configure tracking, and send pageviews and events to PostHog. Not affiliated with PostHog.
- * Version:           0.1.0
+ * Version:           0.2.0
  * Requires at least: 5.8
  * Requires PHP:      8.2
  * Author:            Great Anthony
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Single source of truth for plugin metadata. Prefixed per coding standards.
-define( 'HOGPRESS_VERSION', '0.1.0' );
+define( 'HOGPRESS_VERSION', '0.2.0' );
 define( 'HOGPRESS_FILE', __FILE__ );
 define( 'HOGPRESS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HOGPRESS_URL', plugin_dir_url( __FILE__ ) );

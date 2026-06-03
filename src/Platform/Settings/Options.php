@@ -54,6 +54,15 @@ final class Options {
 				'send_name'          => true,
 				'send_role'          => true,
 			),
+			'server_events'   => array(
+				'enabled'               => true,
+				'user_logged_in'        => true,
+				'user_registered'       => true,
+				'product_viewed'        => true,
+				'product_added_to_cart' => true,
+				'checkout_started'      => true,
+				'order_completed'       => true,
+			),
 		);
 	}
 
@@ -76,7 +85,7 @@ final class Options {
 		$merged   = array_merge( $defaults, $stored );
 
 		// Deep-merge each known sub-array so partial stored data keeps defaults.
-		foreach ( array( 'client', 'identity' ) as $group ) {
+		foreach ( array( 'client', 'identity', 'server_events' ) as $group ) {
 			$merged[ $group ] = array_merge(
 				$defaults[ $group ],
 				isset( $stored[ $group ] ) && is_array( $stored[ $group ] ) ? $stored[ $group ] : array()
@@ -163,6 +172,26 @@ final class Options {
 	}
 
 	/**
+	 * The server-side events configuration sub-array.
+	 *
+	 * @return array<string,mixed>
+	 */
+	public static function server_events() {
+		return (array) self::all()['server_events'];
+	}
+
+	/**
+	 * Whether a specific server-side event is enabled (master + per-event).
+	 *
+	 * @param string $key Event settings key (e.g. 'order_completed').
+	 * @return bool
+	 */
+	public static function is_server_event_enabled( $key ) {
+		$events = self::server_events();
+		return ! empty( $events['enabled'] ) && ! empty( $events[ $key ] );
+	}
+
+	/**
 	 * Whether the plugin has enough to load posthog-js (key + resolvable host).
 	 *
 	 * @return bool
@@ -228,6 +257,16 @@ final class Options {
 			$identity['send_name']          = ! empty( $raw_identity['send_name'] );
 			$identity['send_role']          = ! empty( $raw_identity['send_role'] );
 			$current['identity']            = $identity;
+		}
+
+		// Server-side event toggles (master + per-event). Hidden marker as above.
+		if ( isset( $input['server_events'] ) && is_array( $input['server_events'] ) ) {
+			$raw_server = wp_unslash( $input['server_events'] );
+			$server     = $current['server_events'];
+			foreach ( array_keys( $server ) as $event_key ) {
+				$server[ $event_key ] = ! empty( $raw_server[ $event_key ] );
+			}
+			$current['server_events'] = $server;
 		}
 
 		return $current;

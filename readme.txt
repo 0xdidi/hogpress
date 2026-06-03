@@ -4,7 +4,7 @@ Tags: analytics, posthog, tracking, events, statistics
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 8.2
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,14 +24,14 @@ HogPress is an independent project. It is not affiliated with, endorsed by, or s
 * Plain-language toggles for what gets captured: pageviews, autocapture (clicks and form interactions), session recording, and person profile mode.
 * Privacy-first cookieless mode that keeps visitor state in memory, so no PostHog cookie is set.
 * Identity: tie logged-in WordPress users to one PostHog person across anonymous and logged-in sessions, using a stable hashed identifier (never the raw user ID). You choose whether to identify logged-in users and which properties to send (email, name, role).
+* Server-side events: send key events (user logged in, user registered) from your own WordPress server, so they still arrive when a visitor's browser blocks tracking. Runs on your existing hosting, with a per-event on/off switch. A failed or slow PostHog request never affects your pages.
+* WooCommerce events (when WooCommerce is active): product viewed, added to cart, checkout started, and order completed with order value and currency. The same person is tracked from the browser session through to the completed order.
 * A clean settings screen that fits WordPress and stays out of your way.
 
 = On the roadmap =
 
 Planned for future releases:
 
-* Server-side event capture so events still arrive when client-side requests are blocked.
-* WooCommerce events (product views, add to cart, checkout, completed orders).
 * A no-flicker feature-flag block and shortcode evaluated on the server.
 * Optional starter dashboards created in your PostHog project.
 * WordPress Consent API support.
@@ -77,6 +77,7 @@ What is sent and when:
 
 * When you save your settings in the admin, the plugin makes one request to the PostHog feature-flags endpoint (for example https://us.i.posthog.com/flags) with your project API key to confirm the key and host are valid. This request does not record any analytics event.
 * On your site's front end, after you have connected and only when configured, the plugin loads PostHog (posthog-js) from the host you choose (PostHog US cloud, EU cloud, or your own host). PostHog then sends visitor analytics such as pageviews and, if enabled, clicks and form interactions and session recordings, to your PostHog project. The exact data depends on the toggles you choose.
+* When server-side events are enabled, your WordPress server sends those events (for example user logged in, or a completed WooCommerce order with its value and currency) directly to your configured PostHog host. This happens from your server, not the visitor's browser.
 
 The host the data is sent to is the one you configure:
 
@@ -95,10 +96,18 @@ You are responsible for telling your visitors what you collect and for obtaining
 
 == Changelog ==
 
+= 0.2.0 =
+* Identity: tie logged-in users to one PostHog person with a stable, hashed identifier. Configurable, with per-property control over email, name, and role.
+* Server-side events: send events from your WordPress server (user logged in, user registered), each with an on/off toggle and a master switch. A failed or slow PostHog request never affects your pages.
+* WooCommerce events (when active): product viewed, added to cart, checkout started, and order completed with order value and currency, stitched to the same person from session through to the completed order.
+
 = 0.1.0 =
-* First release: connect to PostHog (US, EU, or self-hosted / reverse proxy), validate the key before saving, load PostHog on the front end with tracking toggles (pageviews, autocapture, session recording, person profiles, cookieless mode), and tie logged-in users to one PostHog person with a stable hashed identifier (configurable, with per-property control).
+* First release: connect to PostHog (US, EU, or self-hosted / reverse proxy), validate the key before saving, and load PostHog on the front end with tracking toggles (pageviews, autocapture, session recording, person profiles, cookieless mode).
 
 == Upgrade Notice ==
+
+= 0.2.0 =
+Adds identity stitching and server-side event capture (including WooCommerce), all configurable.
 
 = 0.1.0 =
 First release.

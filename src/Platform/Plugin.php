@@ -9,7 +9,10 @@ namespace Hogpress\Platform;
 
 use Hogpress\Platform\Admin\Notices;
 use Hogpress\Platform\Admin\SettingsPage;
+use Hogpress\Platform\Events\Dispatcher;
 use Hogpress\Platform\Frontend\Enqueue;
+use Hogpress\Platform\Listeners\CoreEvents;
+use Hogpress\Platform\Listeners\WooEvents;
 
 /**
  * Wires the plugin together on init.
@@ -70,6 +73,11 @@ final class Plugin {
 
 		// Front-end posthog-js injection.
 		( new Enqueue() )->register();
+
+		// Server-side event capture (core + WooCommerce when active).
+		$dispatcher = new Dispatcher();
+		( new CoreEvents( $dispatcher ) )->register();
+		( new WooEvents( $dispatcher ) )->register();
 	}
 
 	/**

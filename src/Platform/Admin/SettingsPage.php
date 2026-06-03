@@ -12,6 +12,7 @@ namespace Hogpress\Platform\Admin;
 
 use Hogpress\Core\Connection\Host;
 use Hogpress\Platform\Connection\Validator;
+use Hogpress\Platform\Listeners\WooEvents;
 use Hogpress\Platform\Settings\Options;
 
 /**
@@ -222,6 +223,8 @@ final class SettingsPage {
 		$custom_host = Options::custom_host();
 		$client      = Options::client();
 		$identity    = Options::identity();
+		$server      = Options::server_events();
+		$woo_active  = WooEvents::woocommerce_active();
 		$is_custom   = Host::REGION_CUSTOM === $region;
 		?>
 		<div class="wrap hogpress-wrap">
@@ -387,6 +390,76 @@ final class SettingsPage {
 						__( 'Attach the user primary role to their PostHog person profile.', 'hogpress' ),
 						! empty( $identity['send_role'] )
 					);
+					?>
+				</section>
+
+				<section class="hogpress-card">
+					<h2 class="hogpress-card__title"><?php esc_html_e( 'Server-side events', 'hogpress' ); ?></h2>
+					<p class="hogpress-help">
+						<?php esc_html_e( 'Send key events from your site\'s server, so they still arrive when a visitor\'s browser blocks tracking. These run on your existing WordPress hosting; nothing extra to set up.', 'hogpress' ); ?>
+					</p>
+
+					<input type="hidden" name="hogpress[server_events][present]" value="1" />
+
+					<?php
+					$this->toggle(
+						'server_events',
+						'enabled',
+						__( 'Send events from the server', 'hogpress' ),
+						__( 'Master switch for all server-side events below.', 'hogpress' ),
+						! empty( $server['enabled'] )
+					);
+					$this->toggle(
+						'server_events',
+						'user_logged_in',
+						__( 'User logged in', 'hogpress' ),
+						__( 'Capture when a user logs in.', 'hogpress' ),
+						! empty( $server['user_logged_in'] )
+					);
+					$this->toggle(
+						'server_events',
+						'user_registered',
+						__( 'User registered', 'hogpress' ),
+						__( 'Capture when a new user account is created.', 'hogpress' ),
+						! empty( $server['user_registered'] )
+					);
+
+					if ( $woo_active ) {
+						$this->toggle(
+							'server_events',
+							'product_viewed',
+							__( 'Product viewed (WooCommerce)', 'hogpress' ),
+							__( 'Capture when a product page is viewed.', 'hogpress' ),
+							! empty( $server['product_viewed'] )
+						);
+						$this->toggle(
+							'server_events',
+							'product_added_to_cart',
+							__( 'Added to cart (WooCommerce)', 'hogpress' ),
+							__( 'Capture when a product is added to the cart.', 'hogpress' ),
+							! empty( $server['product_added_to_cart'] )
+						);
+						$this->toggle(
+							'server_events',
+							'checkout_started',
+							__( 'Checkout started (WooCommerce)', 'hogpress' ),
+							__( 'Capture when a checkout is submitted.', 'hogpress' ),
+							! empty( $server['checkout_started'] )
+						);
+						$this->toggle(
+							'server_events',
+							'order_completed',
+							__( 'Order completed (WooCommerce)', 'hogpress' ),
+							__( 'Capture when an order is marked completed, with order value and currency.', 'hogpress' ),
+							! empty( $server['order_completed'] )
+						);
+					} else {
+						?>
+						<p class="hogpress-help hogpress-help--field">
+							<?php esc_html_e( 'WooCommerce is not active. Install WooCommerce to capture commerce events (product views, add to cart, checkout, orders).', 'hogpress' ); ?>
+						</p>
+						<?php
+					}
 					?>
 				</section>
 
